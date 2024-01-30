@@ -1,24 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { useState } from 'react';
+import { Input, List, Todo } from './todo';
+import { Item } from './todo/Item';
 function App() {
+  const todosLocals = window.localStorage.getItem("todos")
+  const [todos, setTodos] = useState(todosLocals ? JSON.parse(todosLocals) : [])
+  const [read, setRead] = useState(true)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+        
+      <Todo />
+      <Input todos={todos} setTodos={setTodos} />
+      <List>
+        {todos?.map(item => (
+          <Item read={read} setRead={setRead} setTodos={setTodos} todos={todos} id={item.id} text={item.title} />
+        ))}
+      </List>
+
+
+
+
+       
+    </>
   );
 }
 
